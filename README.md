@@ -1,0 +1,2 @@
+# crx-favorite
+chrome extension
