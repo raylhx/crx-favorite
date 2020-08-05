@@ -27,30 +27,37 @@ export default {
       title: '',
       reason: '',
       categor: '',
-      username: ''
+      username: '',
+      link: ''
     }
   },
   mounted () {
-    chrome.windows.getCurrent({ populate: true }, (currentWindow) => {
-      chrome.tabs.query({
-        active: true,
-        currentWindow: true
-      }, function (tabs) {
-        console.log('--------------', tabs)
-        const tabID = tabs.length ? tabs[0].id : null
-        chrome.tabs.executeScript(tabID, {
-          file: 'recommend.js'
-        }, () => {
-          chrome.tabs.sendMessage(tabID, { message: 'GET_TOPIC_DATA' }, (res) => {
-            console.log('GET_TOPIC_DATA', res)
-          })
-        })
-      })
-    })
+    this.initExtension()
   },
   methods: {
     commit () {
 
+    },
+    initExtension () {
+      const _this = this
+      chrome.windows.getCurrent({ populate: true }, (currentWindow) => {
+        chrome.tabs.query({
+          active: true,
+          currentWindow: true
+        }, function (tabs) {
+          const tabID = tabs.length ? tabs[0].id : null
+          chrome.tabs.executeScript(tabID, {
+            file: 'recommend.js'
+          }, () => {
+            chrome.tabs.sendMessage(tabID, { message: 'GET_TOPIC_DATA' }, (res) => {
+              console.log('GET_TOPIC_DATA', res)
+              _this.title = res.title
+              _this.reason = res.description
+              _this.link = res.link
+            })
+          })
+        })
+      })
     }
   }
 }
