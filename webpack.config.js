@@ -81,6 +81,7 @@ const config = {
       { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
       { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },
       { from: 'getHTMLData.js', to: 'getHTMLData.js' },
+      { from: 'recommend.js', to: 'recommend.js' },
       {
         from: 'manifest.json',
         to: 'manifest.json',

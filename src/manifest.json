@@ -20,11 +20,28 @@
     "page": "options/options.html",
     "chrome_style": true
   },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Q",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Opens popup.html"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": ["./getHTMLData.js"],
       "run_at": "document_start"
     }
+  ],
+  "permissions": [
+    "storage",
+    "declarativeContent",
+    "activeTab",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
   ]
 }

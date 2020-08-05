@@ -30,6 +30,24 @@ export default {
       username: ''
     }
   },
+  mounted () {
+    chrome.windows.getCurrent({ populate: true }, (currentWindow) => {
+      chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      }, function (tabs) {
+        console.log('--------------', tabs)
+        const tabID = tabs.length ? tabs[0].id : null
+        chrome.tabs.executeScript(tabID, {
+          file: 'recommend.js'
+        }, () => {
+          chrome.tabs.sendMessage(tabID, { message: 'GET_TOPIC_DATA' }, (res) => {
+            console.log('GET_TOPIC_DATA', res)
+          })
+        })
+      })
+    })
+  },
   methods: {
     commit () {
 
