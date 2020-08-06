@@ -27,12 +27,12 @@ export default {
       title: '',
       reason: '',
       categor: '',
-      username: '',
+      nickName: '',
       link: ''
     }
   },
   mounted () {
-    this.initExtension()
+    this.init()
   },
   methods: {
     commit () {
@@ -57,6 +57,16 @@ export default {
             })
           })
         })
+      })
+    },
+    init () {
+      this.initExtension()
+      this.getNickName()
+    },
+    getNickName () {
+      const _this = this
+      chrome.storage.sync.get('nickName', (data) => {
+        _this.nickName = data.nickName
       })
     }
   }
